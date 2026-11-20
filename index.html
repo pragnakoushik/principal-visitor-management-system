@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Registration | Principal's Chamber</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="container">
+
+        <!-- College Logo -->
+        <section class="logo-section">
+            <img src="visiting.png"
+                 alt="College Logo"
+                 class="college-logo">
+        </section>
+
+        <!-- Instruction -->
+        <section class="welcome">
+            <p>
+                Kindly complete the visitor registration form
+                before entering the Principal's Chamber.
+            </p>
+            <div class="welcome-line"></div>
+        </section>
+
+        <!-- Visitor Registration Form -->
+        <section class="form-card" id="formCard">
+
+            <div class="form-heading">
+                <div>
+                    <span class="section-number">01 / REGISTRATION</span>
+                    <h2>Visitor Information</h2>
+                    <p>Please provide the following details.</p>
+                </div>
+                <div class="document-icon">✦</div>
+            </div>
+
+            <form id="visitorForm">
+
+                <div class="field">
+                    <label for="visitDate">Date <span>*</span></label>
+                    <input type="text" id="visitDate" readonly>
+                </div>
+
+                <div class="field">
+                    <label for="visitTime">Time <span>*</span></label>
+                    <input type="text" id="visitTime" readonly>
+                </div>
+
+                <div class="field">
+                    <label for="visitorName">Full Name <span>*</span></label>
+                    <input type="text" id="visitorName"
+                        placeholder="Enter your full name"
+                        required maxlength="100">
+                </div>
+
+                <div class="field">
+                    <label for="contact">Contact Number <span>*</span></label>
+                    <input type="tel" id="contact"
+                        placeholder="Enter 10-digit mobile number"
+                        pattern="[6-9][0-9]{9}"
+                        inputmode="numeric" required>
+                </div>
+
+                <div class="field">
+                    <label for="designation">Designation <span>*</span></label>
+                    <input type="text" id="designation"
+                        placeholder="Your designation"
+                        required maxlength="100">
+                </div>
+
+                <div class="field">
+                    <label for="organization">Organization Name <span>*</span></label>
+                    <input type="text" id="organization"
+                        placeholder="Enter organization name"
+                        required maxlength="150">
+                </div>
+
+                <div class="field full-width">
+                    <label for="purpose">Purpose of Visit <span>*</span></label>
+                    <select id="purpose" required>
+                        <option value="">Select purpose of visit</option>
+                        <option value="Official Discussion">Official Discussion</option>
+                        <option value="Admission Enquiry">Admission Enquiry</option>
+                        <option value="Academic Discussion">Academic Discussion</option>
+                        <option value="Personal Meeting">Personal Meeting</option>
+                        <option value="Business Meeting">Business Meeting</option>
+                        <option value="Confidential">Confidential</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="field full-width hidden" id="otherPurposeBox">
+                    <label for="otherPurpose">Please specify your purpose <span>*</span></label>
+                    <input type="text" id="otherPurpose"
+                        placeholder="Enter your purpose"
+                        maxlength="200">
+                </div>
+
+                <div class="confidential-note hidden" id="confidentialNote">
+                    Your visit purpose will be recorded as
+                    <strong>Confidential</strong>. You do not need to disclose
+                    any additional details.
+                </div>
+
+                <div class="field">
+                    <label for="place">Place <span>*</span></label>
+                    <input type="text" id="place"
+                        placeholder="Enter your city / place"
+                        required maxlength="100">
+                </div>
+
+                <div class="field">
+                    <label for="reference">Reference</label>
+                    <input type="text" id="reference"
+                        placeholder="Referred by (if any)"
+                        maxlength="100">
+                </div>
+
+                <div class="privacy-note full-width">
+                    <span>🔒</span>
+                    <p>Your information is collected for visitor
+                    registration purposes only.</p>
+                </div>
+
+                <button type="submit" id="submitBtn" class="submit-btn">
+                    Submit Registration <span>→</span>
+                </button>
+
+                <p class="required-note">* Required fields</p>
+
+            </form>
+        </section>
+
+        <!-- Success Message -->
+        <section class="success-card hidden" id="successCard">
+            <div class="success-icon">✓</div>
+            <h2>Registration Submitted!</h2>
+            <p>
+                Thank you for providing your information.
+                Your visitor registration has been recorded
+                on this demonstration device.
+            </p>
+            <button type="button" id="newVisitorBtn">
+                Register Another Visitor
+            </button>
+        </section>
+
+        <footer>
+            <p>PRINCIPAL'S OFFICE</p>
+            <span>Smart QR-Based Visitor Registration System</span>
+        </footer>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
