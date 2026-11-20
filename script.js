@@ -1,4 +1,3 @@
-// Get HTML elements
 const visitorForm = document.getElementById("visitorForm");
 const purpose = document.getElementById("purpose");
 const otherPurposeBox = document.getElementById("otherPurposeBox");
@@ -11,7 +10,6 @@ const newVisitorBtn = document.getElementById("newVisitorBtn");
 
 const visitDate = document.getElementById("visitDate");
 const visitTime = document.getElementById("visitTime");
-
 
 // Automatically fill date and time
 function updateDateTime() {
@@ -34,55 +32,33 @@ function updateDateTime() {
 
 updateDateTime();
 
-
-// Update date and time when the visitor selects a purpose
+// Purpose selection
 purpose.addEventListener("change", function () {
-
     otherPurposeBox.classList.add("hidden");
     confidentialNote.classList.add("hidden");
-
     otherPurpose.required = false;
 
     if (purpose.value === "Other") {
         otherPurposeBox.classList.remove("hidden");
         otherPurpose.required = true;
-    }
-
+    } 
     else if (purpose.value === "Confidential") {
         confidentialNote.classList.remove("hidden");
     }
 });
 
-
-// Submit visitor registration
+// Submit registration
 visitorForm.addEventListener("submit", function (event) {
-
     event.preventDefault();
 
     updateDateTime();
 
-    // Get visitor details
-    const visitor = {
-        date: visitDate.value,
-        time: visitTime.value,
+    const contactNumber = document
+        .getElementById("contact")
+        .value.trim();
 
-        name: document.getElementById("visitorName").value.trim(),
-        contact: document.getElementById("contact").value.trim(),
+    const currentDate = visitDate.value;
 
-        designation: document.getElementById("designation").value.trim(),
-        organization: document.getElementById("organization").value.trim(),
-
-        purpose: purpose.value === "Other"
-            ? otherPurpose.value.trim()
-            : purpose.value,
-
-        place: document.getElementById("place").value.trim(),
-
-        reference: document.getElementById("reference").value.trim()
-    };
-
-
-    // Read previously saved visitor records
     let visitors = [];
 
     try {
@@ -93,43 +69,68 @@ visitorForm.addEventListener("submit", function (event) {
         if (!Array.isArray(visitors)) {
             visitors = [];
         }
+    } 
+    catch (error) {
+        alert("Unable to read saved registrations. Please try again.");
+        return;
+    }
 
-        // Add new visitor
-        visitors.push(visitor);
+    // Check for duplicate registration
+    const alreadyRegistered = visitors.some(function (visitor) {
+        return visitor.contact === contactNumber &&
+               visitor.date === currentDate;
+    });
 
-        // Save visitor records
+    if (alreadyRegistered) {
+        alert(
+            "You have already registered today using this contact number. Duplicate registration is not allowed."
+        );
+        return;
+    }
+
+    // Create visitor record
+    const visitor = {
+        date: visitDate.value,
+        time: visitTime.value,
+        name: document.getElementById("visitorName").value.trim(),
+        contact: contactNumber,
+        designation: document.getElementById("designation").value.trim(),
+        organization: document.getElementById("organization").value.trim(),
+        purpose: purpose.value === "Other"
+            ? otherPurpose.value.trim()
+            : purpose.value,
+        place: document.getElementById("place").value.trim(),
+        reference: document.getElementById("reference").value.trim()
+    };
+
+    visitors.push(visitor);
+
+    try {
         localStorage.setItem(
             "principalVisitors",
             JSON.stringify(visitors)
         );
-
-    } catch (error) {
-        alert("Unable to save the registration on this device. Please try again.");
+    } 
+    catch (error) {
+        alert("Unable to save registration. Please try again.");
         return;
     }
 
-
-    // Show success message
     formCard.classList.add("hidden");
     successCard.classList.remove("hidden");
 
-    // Move page to success message
     successCard.scrollIntoView({
         behavior: "smooth",
         block: "center"
     });
-
 });
-
 
 // Register another visitor
 newVisitorBtn.addEventListener("click", function () {
-
     visitorForm.reset();
 
     otherPurposeBox.classList.add("hidden");
     confidentialNote.classList.add("hidden");
-
     otherPurpose.required = false;
 
     updateDateTime();
@@ -141,5 +142,4 @@ newVisitorBtn.addEventListener("click", function () {
         behavior: "smooth",
         block: "start"
     });
-
 });
