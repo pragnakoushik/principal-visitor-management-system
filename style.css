@@ -367,9 +367,9 @@ footer span {
     }
 
     .college-logo {
-        width: 240px;
-        height: 240px;
-        object-fit: contain;
+        width: 100%;
+        height: auto;
+        max-width:100%;
         display:block;
         margin: 0 auto;
     }
@@ -483,11 +483,6 @@ footer span {
     .container {
         padding-left: 10px;
         padding-right: 10px;
-    }
-
-    .college-logo {
-        width: 240px;
-        height: 240px;
     }
 
     .form-card {
